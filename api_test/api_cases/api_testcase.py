@@ -139,3 +139,28 @@ class apitest(unittest.TestCase):
             self.assertTrue(False,str(e))
             self.log.error("预期code:%s,实际code:%s" % (except_value, code))
             
+    def test_准入体检_1(self):
+        '''工商信息-企业标签12'''
+        headers = {"Content-Type": "application/json;charset=UTF-8"}
+        headers['token'] = self.token
+        data = {
+    "entid":"6F274E54F3DE7C57E0539601A8C0ACD65"
+}
+        if not headers:
+            headers = None
+        if not data:
+            data = None
+        except_value = '200'
+        self.log.info("入参：%s"%data)
+        res = self.s.get(self.url+'/api/portrait/entinfo/tag',params=data,headers=headers)
+        self.log.info("《工商信息-企业标签12》响应内容：%s"%res.text)
+        
+        try:
+            code = str(res.status_code)
+            self.assertTrue(code == except_value, "预期code:%s,实际code:%s" % (except_value, code))
+            self.log.info("预期code:%s,实际code:%s" % (except_value, code))
+        except Exception as e:
+            traceback.print_exc()
+            self.assertTrue(False,str(e))
+            self.log.error("预期code:%s,实际code:%s" % (except_value, code))
+            
