@@ -49,5 +49,5 @@ class Logger(object):
 
 if __name__ =='__main__':
     logyyx = Logger("login")
-    # logyyx.debug('一个debug信息')
+    
 
