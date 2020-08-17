@@ -5,7 +5,7 @@
 # @File : run.py
 # @Software: pycharm
 import  unittest,os
-from Library import HTMLTestRunner2,CommonMethod
+from Library import HTMLTestRunner2,CommonMethod,SendEmail
 from api_test.api_create_pys import make_testcase
 dirPath=CommonMethod.getPath()+"/report/apiReport/"
 if not os.path.exists(dirPath):
@@ -63,6 +63,7 @@ if __name__ == '__main__':
     make_testcase.makeFileToTestcase() #生成最新的测试案例
     CommonMethod.deleteReport() #删除一天前的测试报告
     Testsuite()    #自动化运行
+    SendEmail.sendEmail().sendEmailFun(0) #发送邮件,0：接口自动化  1. ui自动化
 
 
 
