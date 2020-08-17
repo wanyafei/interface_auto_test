@@ -82,10 +82,39 @@ def driverconfig(url):
     time.sleep(1)
     print(browserType)
 
+def getNewReportDir(type):
+    '''
+    根据类型获取最新的自动化测试后的测试报告路径
+    :param type: 0：接口自动化  1. ui自动化
+    :return: 获取到最新生成的一份测试报告路径
+    '''
+    type=str(type)
+    if type=="0":
+        dir=getPath() + "/report/apiReport"
+        #取出测试报告文件夹下所有测试报告存放至列表
+        tset_report_list=os.listdir(dir)
+        #使用内置函数sorted对列表进行升序排序
+        new_report_list=sorted(tset_report_list)
+        #获取到最新的测试报告
+        last_eport_list=new_report_list[-1]
+        #返回最新的测试报告地址
+        return os.path.join(dir,last_eport_list)
+    elif type=="1":
+        dir = getPath() + "/report/uiReport"
+        # 取出测试报告文件夹下所有测试报告存放至列表
+        tset_report_list = os.listdir(dir)
+        # 使用内置函数sorted对列表进行升序排序
+        new_report_list = sorted(tset_report_list)
+        # 获取到最新的测试报告
+        last_eport_list = new_report_list[-1]
+        # 返回最新的测试报告地址
+        return os.path.join(dir, last_eport_list)
+    else:
+        print("输入类型有误,不能根据其判断获取最新的测试报告路径")
 
 
 if __name__ == '__main__':
 
     # print(time.strftime("%Y-%m-%d %H_%M_%S",time.localtime(time.time())))
     # driverconfig("https://www.baidu.com")
-    pass
+    print(getNewReportDir(0))
