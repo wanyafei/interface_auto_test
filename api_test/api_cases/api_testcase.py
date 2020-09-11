@@ -26,7 +26,7 @@ class apitest(unittest.TestCase):
         }
         data={
             "account":"wanyafei01",
-            "password":"4aa9932ce6c5efe7f63f9785c7d6f4ba"
+            "password":"9cbf8a4dcb8e30682b927f352d6559a0"
         }
         token=json.loads(cls.s.post(cls.url+login_api, json=data, headers=headers).content)['data']['token']
         cls.token=token
@@ -125,19 +125,20 @@ class apitest(unittest.TestCase):
             headers = None
         if not data:
             data = None
-        except_value = '200'
+        except_value = '10'
         self.log.info("入参：%s"%data)
         res = self.s.get(self.url+'/api/portrait/entinfo/shareholder',params=data,headers=headers)
         self.log.info("《工商信息-股东》响应内容：%s"%res.text)
         
         try:
-            code = str(res.status_code)
-            self.assertTrue(code == except_value, "预期code:%s,实际code:%s" % (except_value, code))
-            self.log.info("预期code:%s,实际code:%s" % (except_value, code))
+            jsonres = json.loads(res.content)
+            actual_value = str(jsonres['data']['pagination']['totalCount'])
+            self.assertTrue(actual_value==except_value,"预期结果:%s,实际结果:%s"%(except_value,actual_value))
+            self.log.info("预期结果:%s,实际结果:%s"%(except_value,actual_value))
         except Exception as e:
             traceback.print_exc()
             self.assertTrue(False,str(e))
-            self.log.error("预期code:%s,实际code:%s" % (except_value, code))
+            self.log.error("预期结果:%s,实际结果:%s"%(except_value,actual_value))
             
     def test_准入体检_1(self):
         '''工商信息-企业标签12'''
@@ -150,7 +151,7 @@ class apitest(unittest.TestCase):
             headers = None
         if not data:
             data = None
-        except_value = '200'
+        except_value = '20022'
         self.log.info("入参：%s"%data)
         res = self.s.get(self.url+'/api/portrait/entinfo/tag',params=data,headers=headers)
         self.log.info("《工商信息-企业标签12》响应内容：%s"%res.text)

@@ -1,5 +1,6 @@
 import configparser
 import time,datetime
+from Library import Mysqldb
 from pathlib import Path
 import os
 from selenium import webdriver
@@ -28,7 +29,7 @@ def getConfig(keyinfo,area="HTTP"):
     :return:
     '''
    getconfigvalue=configparser.ConfigParser()
-   getconfigvalue.read(getPath()+"/api_test/api_config/config.ini",encoding="UTF_8")
+   getconfigvalue.read(getPath()+"/Config/config.ini",encoding="UTF_8")
    return getconfigvalue.get(area,keyinfo)
 
 def getRunTxtInfo():
@@ -52,16 +53,21 @@ def getNowTime():
     '''
     return time.strftime("%Y-%m-%d %H_%M_%S",time.localtime(time.time()))
 
-def deleteReport():
+def deleteReport(flag):
     '''
+    flag:0 为接口的报告 1为UI的报告
     删除一天前的html测试报告
     :return:
     '''
-    if Path(getPath()+"/report/apiReport/").exists():
+    if flag==0:
+        repordir="apiReport/"
+    else:
+        repordir ="uiReport/"
+    if Path(getPath()+"/report/"+repordir).exists():
         deleteReportDate=(datetime.datetime.now()+datetime.timedelta(-int(getConfig("delete",area="CONFIG")))).strftime("%Y-%m-%d")
-        for report in os.listdir(getPath()+"/report/apiReport/"):
+        for report in os.listdir(getPath()+"/report/"+repordir):
             if report[:10]<=deleteReportDate:
-                os.remove(getPath()+"/report/apiReport/"+report)
+                os.remove(getPath()+"/report/"+repordir+report)
     else:
         print("目录下不存在report文件夹")
 
@@ -111,10 +117,51 @@ def getNewReportDir(type):
         return os.path.join(dir, last_eport_list)
     else:
         print("输入类型有误,不能根据其判断获取最新的测试报告路径")
+def generateEntid(sql):
+    '''
+    通过传入的sql语句获取对应的entid
+    :param sql:
+    :return: 列表形式的entids
+    '''
+    entids = Mysqldb.Mysqldb().search(sql)
+    entnames = []
+    for entid in entids:
+        entnames.append(entid[0])
+    return entnames
 
+num=0    #通过改变
+def create_counter():
+    '''
+    计数器，每次调用自增1
+    :return:
+    '''
+    def increase():
+        global num
+        num= num+1
+        return num
+    return increase
 
 if __name__ == '__main__':
 
     # print(time.strftime("%Y-%m-%d %H_%M_%S",time.localtime(time.time())))
     # driverconfig("https://www.baidu.com")
-    print(getNewReportDir(0))
+    # flag=0
+    # deleteReport(flag)
+    import json, requests
+
+    s = requests.session()
+    ip = getConfig("url")
+    login_api = getConfig("login_api")
+
+    headers = {
+        "Connection": "keep_alive",
+        "Content-Type": "application/json;charset=UTF-8",
+    }
+    data = {
+        "account": "wanyafei01",
+        "password": "9cbf8a4dcb8e30682b927f352d6559a0"
+    }
+    ii=ip + login_api
+    yy=json.loads(s.post(ip + login_api, json=data, headers=headers).content)
+    token = json.loads(s.post(ip + login_api, json=data, headers=headers).content)['data']['token']
+    print(token)

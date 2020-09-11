@@ -525,6 +525,8 @@ class _TestResult(TestResult):
         self.failure_count = 0
         self.error_count = 0
         self.verbosity = verbosity
+        self.outputBuffer = io.StringIO()
+        self.test_start_time = round(time.time(), 5)
 
         # result is a list of result in 4 tuple
         # (

@@ -1,0 +1,14 @@
+-
+  url : http://192.168.200.9:30000/login              #登陆url
+  user : wanyafei                                     #登陆用户名
+  password : 2020001699one                            #登陆密码
+  entname : 力帆实业(集团)股份有限公司                    #查询的客户名称
+  quanxigailan :    #----全息概览-----
+    entnametag :    #----企业标签-----
+      except : 在营(开业)力帆股份国内A股601777高新技术企业  # 企业标签--预期结果
+    grade :            #---企业评级---
+      zhuti_grade_except : C                                 # 主体评级--预期结果
+      zhaiquan_grade_except : C                              # 债券评级--预期结果
+
+
+

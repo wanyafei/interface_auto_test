@@ -20,10 +20,14 @@ class sendEmail():
         self.mime=MIMEMultipart()   #定义一个邮件对象
     def sendEmailFun(self,type):
         #1.构造邮件头部信息
+        if type==0:
+            test_type="接口"
+        else:
+            test_type="UI"
         self.mime.attach(MIMEText("测试报告已经生成，附件为运行后的测试报告文件，请注意查收","plain","utf-8"))  #构造正文信息
-        self.mime['From']=formataddr(('自动化测试',self.from_user))   #邮件的发件人
+        self.mime['From']=formataddr((test_type+'自动化测试',self.from_user))   #邮件的发件人
         self.mime['To']=Header("Tester",'utf-8')                    #邮件的收件人
-        self.mime['Subject']=Header('自动化测试报告','utf-8').encode() #邮件的主题
+        self.mime['Subject']=Header(test_type+'自动化测试报告','utf-8').encode() #邮件的主题
         # 添加附件
         att1=MIMEText(open(CommonMethod.getNewReportDir(type),'rb').read(),'base64','utf-8') #构造附件信息
         att1["Content-Type"] = 'application/octet-stream'

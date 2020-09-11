@@ -59,7 +59,7 @@ def makeTemplate(keytype,usetype):
         temla += """
         try:
             jsonres = json.loads(res.content)
-            actual_value = jsonres{except_key}
+            actual_value = str(jsonres{except_key})
             self.assertTrue(actual_value==except_value,"预期结果:%s,实际结果:%s"%(except_value,actual_value))
             self.log.info("预期结果:%s,实际结果:%s"%(except_value,actual_value))
         except Exception as e:

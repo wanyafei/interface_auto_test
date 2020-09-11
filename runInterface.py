@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 # @Time : 2020/7/16 6:04 下午
 # @Author : wyf
-# @File : run.py
+# @File : runInterface.py
 # @Software: pycharm
 import  unittest,os
 from Library import HTMLTestRunner2,CommonMethod,SendEmail
@@ -10,7 +10,7 @@ from api_test.api_create_pys import make_testcase
 dirPath=CommonMethod.getPath()+"/report/apiReport/"
 if not os.path.exists(dirPath):
     os.makedirs(dirPath)
-reportname=CommonMethod.getNowTime()+"_report.html"
+reportname=CommonMethod.getNowTime()+"_interfacereport.html"
 filepath=dirPath+reportname
 alltestnames = []
 alltestnames.append("api_test."+"api_cases.api_testcase")
@@ -30,7 +30,7 @@ def Testsuite():
                 print ("could not import the test suite")
             from traceback import print_exc
             print_exc()
-    print (u"------------------开始运行接口自动化测试--------------------")
+    print (u">>>>>>>>>>>>>>>>>>>>>>>>开始运行接口自动化测试>>>>>>>>>>>>>>>>>>>>>>>>")
     fp = open(filepath,'wb')
     runner = HTMLTestRunner2.HTMLTestRunner(
         stream=fp,
@@ -38,7 +38,7 @@ def Testsuite():
         description=u'智慧信贷项目'
                                                )
     runner.run(suite)
-    print(u"-------------------接口自动化测试结束------------------------")
+    print(u">>>>>>>>>>>>>>>>>>>>>>>>接口自动化测试结束>>>>>>>>>>>>>>>>>>>>>>>>")
     if isrerunerrors:
         failuretests = runner.getfails()
         print (failuretests)
@@ -61,7 +61,7 @@ def Testsuite():
 
 if __name__ == '__main__':
     make_testcase.makeFileToTestcase() #生成最新的测试案例
-    CommonMethod.deleteReport() #删除一天前的测试报告
+    CommonMethod.deleteReport(0) #删除一天前的接口测试报告 0 表示接口自动化测试报告
     Testsuite()    #自动化运行
     SendEmail.sendEmail().sendEmailFun(0) #发送邮件,0：接口自动化  1. ui自动化
 

@@ -18,13 +18,17 @@ class BasePage(object):
         '''
         构造函数实例化driver对象
         :param driver:  driver 对象
-        :param url:  要访问的url
+        :param url:  url地址
         '''
         self.driver=driver
         self.url=url
-    #元素定位
-    def locator(self,loc):
+    #元素定位,查询单个元素
+    def locator(self,*loc):
         return self.driver.find_element(*loc)
+
+    # 元素定位,查询多个元素
+    def locators(self,*loc):
+        return self.driver.find_elements(*loc)
 
     #访问url
     def open(self):
@@ -32,7 +36,7 @@ class BasePage(object):
 
     #释放资源
     def quit(self):
-        time.sleep(2)
+        time.sleep(1)
         self.driver.quit()
 
 

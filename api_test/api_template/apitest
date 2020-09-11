@@ -26,7 +26,7 @@ class apitest(unittest.TestCase):
         }
         data={
             "account":"wanyafei01",
-            "password":"4aa9932ce6c5efe7f63f9785c7d6f4ba"
+            "password":"9cbf8a4dcb8e30682b927f352d6559a0"
         }
         token=json.loads(cls.s.post(cls.url+login_api, json=data, headers=headers).content)['data']['token']
         cls.token=token

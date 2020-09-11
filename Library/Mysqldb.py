@@ -15,10 +15,10 @@ class Mysqldb():
         port=CommonMethod.getConfig("port", "DATABASE")
         database = CommonMethod.getConfig("database", "DATABASE")
         config={
-            'hosts':hosts,
+            'host':hosts,
             'user':usename,
-            'password':password,
-            'port':port,
+            'passwd':password,
+            'port':int(port),
             'db':database
         }
         try:
@@ -39,5 +39,5 @@ class Mysqldb():
 
 
 if __name__ == '__main__':
-    sql="select  * from "
-    Mysqldb().search()
+    sql="select t.entid from  (select  tt.normCode,tt.entid from credit_rflabel2value tt where tt.entid LIKE BINARY '6F%') t group by t.normCode "
+    print(Mysqldb().search(sql))
