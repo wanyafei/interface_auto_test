@@ -1,8 +1,8 @@
 # interface_auto_test
 接口自动化测试框架:python+requests+unittest+BeautifulReport
-
-1.运行 api_create_pys下的makepy.py生成对应的用例脚本
-2.excel规范
+## 操作：
+    1.运行 api_create_pys下的makepy.py生成对应的用例脚本
+    2.excel规范
     ①所有数字以文本格式存储
     ②头信息必须包含Content-Type
     ③若入参为空，则填写{}，必须为json
